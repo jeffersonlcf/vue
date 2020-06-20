@@ -8,10 +8,10 @@
                     <div class="card-body">
                         <ol>
                             <li>
-                                <router-link :to="{ name: 'home'}">Home</router-link>
+                                <router-link :to="{ name: 'search'}">Search</router-link>
                             </li>
                             <li>
-                                <router-link :to="{ name: 'search'}">Search</router-link>
+                                <router-link :to="{ name: 'camera'}">Camera</router-link>
                             </li>
                         </ol>
                     </div>

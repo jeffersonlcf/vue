@@ -10,6 +10,11 @@ let routes = [
         path: '/search',
         name: 'search',
         component: require('./components/Search.vue').default
+    },
+    {
+        path: '/camera',
+        name: 'camera',
+        component: require('./components/Camera.vue').default
     }
 ]
 
