@@ -13,6 +13,9 @@
                             <li>
                                 <router-link :to="{ name: 'camera'}">Camera</router-link>
                             </li>
+                            <li>
+                                <router-link :to="{ name: 'ratings'}">Ratings</router-link>
+                            </li>
                         </ol>
                     </div>
 

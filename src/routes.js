@@ -15,6 +15,11 @@ let routes = [
         path: '/camera',
         name: 'camera',
         component: require('./components/Camera.vue').default
+    },
+    {
+        path: '/ratings',
+        name: 'ratings',
+        component: require('./components/Ratings.vue').default
     }
 ]
 
