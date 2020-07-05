@@ -24,11 +24,3 @@
         </div>
     </div>
 </template>
-
-<script>
-    export default {
-        mounted: function() {
-            console.log('Component mounted.');
-        }
-    }
-</script>

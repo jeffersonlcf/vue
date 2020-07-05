@@ -14,7 +14,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 
-// Install BootstrapVue
+// BootstrapVue
 Vue.use(BootstrapVue);
 Vue.use(VueRouter);
 
