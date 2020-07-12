@@ -41,3 +41,9 @@
         },
     }
 </script>
+
+<style scoped>
+.btn-group {
+    flex-wrap:wrap;
+}
+</style>

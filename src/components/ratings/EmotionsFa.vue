@@ -5,6 +5,7 @@
             :key="btn.icon[1]"
             :pressed.sync="btn.state"
             variant="light"
+            :class="{ 'grey': btn.state === false }"
             @click="updateFaEmotions(btn.emotion)"
         >
             <font-awesome-icon class="icon" :icon="btn.icon"/>
@@ -88,8 +89,12 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .icon {
     font-size: 25px;
+}
+
+.grey > svg {
+    color: grey;
 }
 </style>

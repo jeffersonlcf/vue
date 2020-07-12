@@ -66,7 +66,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .icon-grey{
     color: grey;
     filter: grayscale(100%);
