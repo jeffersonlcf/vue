@@ -1,7 +1,7 @@
 <template>
     <b-button-group>
-        <b-button variant="outline-success border-0" @click="toggleLike(true)" :class="{ active: like === true }"><font-awesome-icon class="icon" :icon="['fas', 'check']" /></b-button>
-        <b-button variant="outline-danger border-0" @click="toggleLike(false)" :class="{ active: like === false }"><font-awesome-icon class="icon" :icon="['fas', 'times']" /></b-button>
+        <b-button variant="border-0" @click="toggleLike(true)" :class="{ 'btn-success': like === true }"><font-awesome-icon class="icon" :icon="['fas', 'check']" /></b-button>
+        <b-button variant="border-0" @click="toggleLike(false)" :class="{ 'btn-danger': like === false }"><font-awesome-icon class="icon" :icon="['fas', 'times']" /></b-button>
     </b-button-group>
 </template>
 

@@ -52,8 +52,10 @@ export default {
     cursor: pointer;
 }
 
-.rating .list:hover .star {
-    color: #ffe100;
+@media (min-width: 992px) { 
+    .rating .list:hover .star {
+        color: #ffe100;
+    }
 }
 
 .rating .list .star:hover ~ .star:not(.active){
