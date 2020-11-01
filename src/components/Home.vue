@@ -16,6 +16,9 @@
                             <li>
                                 <router-link :to="{ name: 'ratings'}">Ratings</router-link>
                             </li>
+                            <li>
+                                <router-link :to="{ name: 'treelist'}">Tree List</router-link>
+                            </li>
                         </ol>
                     </div>
 

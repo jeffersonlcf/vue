@@ -18,6 +18,21 @@ Vue.component('font-awesome-icon', FontAwesomeIcon);
 Vue.use(BootstrapVue);
 Vue.use(VueRouter);
 
+Vue.directive('click-outside', {
+  bind(el, binding, vnode) {
+    const ourClickEventHandler = event => {
+      if (!el.contains(event.target) && el !== event.target) {
+        binding.value(event);
+      }
+    };
+    el.__vueClickEventHandler__ = ourClickEventHandler;
+    document.addEventListener("click", ourClickEventHandler);
+  },
+  unbind: function (el) {
+    document.removeEventListener("click", el.__vueClickEventHandler__);
+  }
+});
+
 new Vue({
   el: '#app',
   router,

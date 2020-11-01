@@ -20,6 +20,11 @@ let routes = [
         path: '/ratings',
         name: 'ratings',
         component: require('./components/Ratings.vue').default
+    },
+    {
+        path: '/treelist',
+        name: 'treelist',
+        component: require('./components/TreeList.vue').default
     }
 ]
 
