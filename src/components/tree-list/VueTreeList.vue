@@ -177,11 +177,22 @@ let compInOperation = null
 
 export default {
   name: 'vue-tree-list',
+  inject: {
+    treeListEmitter: { default: null },
+    treeListRootModel: { default: null }
+  },
+  provide() {
+    if (this.model && this.model.title === 'root') {
+      return {
+        treeListEmitter: this,
+        treeListRootModel: this.model
+      };
+    }
+    return {};
+  },
   data: function() {
     return {
       isHover: false,
-      isActive: false,
-      bold: false,
       isLoading: false,
       editable: false,
       isDragEnterUp: false,
@@ -209,11 +220,7 @@ export default {
   },
   computed: {
     rootNode() {
-      var node = this.$parent
-      while (node._props.model.title !== 'root') {
-        node = node.$parent
-      }
-      return node
+      return this.treeListRootModel || this.model
     },
 
     caretClass() {
@@ -226,10 +233,8 @@ export default {
 
     treeNodeClass() {
       const {
-        model: { dragDisabled, disabled },
+        model: { dragDisabled, disabled, isActive, bold },
         isDragEnterNode,
-        isActive,
-        bold
       } = this
 
       return {
@@ -251,14 +256,18 @@ export default {
       }
     })
   },
-  beforeDestroy() {
+  beforeUnmount() {
     removeHandler(window, 'keyup')
   },
   methods: {
+    emitRoot(eventName, ...args) {
+      const emitter = this.treeListEmitter || this
+      emitter.$emit(eventName, ...args)
+    },
     updateName(e) {
       var oldTitle = this.model.title
       this.model.changeName(e.target.value)
-      this.rootNode.$emit('changing-name', {
+      this.emitRoot('changing-name', {
         id: this.model.id,
         oldTitle: oldTitle,
         newTitle: e.target.value,
@@ -267,7 +276,7 @@ export default {
     },
 
     delNode() {
-      this.rootNode.$emit('delete-node', this.model)
+      this.emitRoot('delete-node', this.model)
     },
 
     setEditable() {
@@ -283,7 +292,7 @@ export default {
       this.editable = false
       var oldTitle = this.model.title
       this.model.changeName(e.target.value)
-      this.rootNode.$emit('change-name', {
+      this.emitRoot('change-name', {
         id: this.model.id,
         oldTitle: oldTitle,
         newTitle: e.target.value,
@@ -307,36 +316,35 @@ export default {
       this.isHover = false
     },
 
-    deselectingAll(node, children) {
-      children.forEach(child => {
-        if (child.$children && child.$children.length > 0) {
-          this.deselectingAll(child,child.$children);
-        }
-        child.isActive = false;
-        child.bold = false;
-      });
+    deselectingAll(node) {
+      if (!node) return
+      node.isActive = false
+      node.bold = false
+      if (node.children && node.children.length > 0) {
+        node.children.forEach(child => this.deselectingAll(child))
+      }
     },
 
     setBold(node){
-      if(node.rootNode !== node.$parent){
-        this.setBold(node.$parent);
+      if (node.parent) {
+        this.setBold(node.parent)
       }
-      node.bold = true;
+      node.bold = true
     },
 
     setActive(node){
-      this.setBold(node);
-      node.isActive = true;
+      this.setBold(node)
+      node.isActive = true
     },
 
     click() {
-      this.deselectAll();
-      this.setActive(this);
-      this.rootNode.$emit('click', this.model, this)
+      this.deselectAll()
+      this.setActive(this.model)
+      this.emitRoot('click', this.model, this)
     },
 
     deselectAll() {
-      this.deselectingAll(this.rootNode, this.rootNode.$children);
+      this.deselectingAll(this.rootNode)
     },
 
     addChild(isLeaf) {
@@ -344,7 +352,7 @@ export default {
       this.expanded = true
       var node = new TreeNode({ title, isLeaf })
       this.model.addChildren(node, true)
-      this.rootNode.$emit('add-node', node)
+      this.emitRoot('add-node', node)
     },
 
     dragStart(e) {
@@ -378,7 +386,7 @@ export default {
       const oldParent = compInOperation.model.parent
       compInOperation.model.moveInto(this.model)
       this.isDragEnterNode = false
-      this.rootNode.$emit('drop', {
+      this.emitRoot('drop', {
         target: this.model,
         node: compInOperation.model,
         src: oldParent
@@ -402,7 +410,7 @@ export default {
       const oldParent = compInOperation.model.parent
       compInOperation.model.insertBefore(this.model)
       this.isDragEnterUp = false
-      this.rootNode.$emit('drop-before', {
+      this.emitRoot('drop-before', {
         target: this.model,
         node: compInOperation.model,
         src: oldParent
@@ -426,7 +434,7 @@ export default {
       const oldParent = compInOperation.model.parent
       compInOperation.model.insertAfter(this.model)
       this.isDragEnterBottom = false
-      this.rootNode.$emit('drop-after', {
+      this.emitRoot('drop-after', {
         target: this.model,
         node: compInOperation.model,
         src: oldParent

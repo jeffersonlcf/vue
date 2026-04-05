@@ -1,22 +1,24 @@
 <template>
-    <b-button-group>
-        <b-button
+    <div>
+    <BButtonGroup>
+        <BButton
             v-for="(btn) in buttonsFa"
             :key="btn.icon[1]"
-            :pressed.sync="btn.state"
+            v-model:pressed="btn.state"
             variant="light"
             :class="{ 'grey': btn.state === false }"
             @click="updateFaEmotions(btn.emotion)"
         >
             <font-awesome-icon class="icon" :icon="btn.icon"/>
-        </b-button>
-    </b-button-group>
+        </BButton>
+    </BButtonGroup>
+    </div>
 </template>
 
 
 <script>
 
-// Font Awesome 5
+import { BButton, BButtonGroup } from 'bootstrap-vue-next'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import {
     faSurprise,
@@ -59,6 +61,10 @@ const fa = {
 
 export default {
     name: 'EmotionsFa',
+    components: {
+        BButton,
+        BButtonGroup
+    },
     data: function() {
         return {
             faEmotions: [],

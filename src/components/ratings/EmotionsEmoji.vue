@@ -1,23 +1,24 @@
 <template>
-    <b-button-group>
-        <b-button
+    <BButtonGroup>
+        <BButton
             :title="btn.name"
             v-for="(btn) in buttonsEmojis"
             :key="btn.emotion"
-            :pressed.sync="btn.state"
+            v-model:pressed="btn.state"
             :class="{ 'icon-grey': btn.state === false }"
             variant="light"
             @click="updateEmojiEmotions(btn.emotion)"
         >
             {{ btn.icon }}
-        </b-button>
-    </b-button-group>
+        </BButton>
+    </BButtonGroup>
 </template>
 
 
 <script>
 
-// Emoji
+import { BButton, BButtonGroup } from 'bootstrap-vue-next'
+
 const emojis = {
     angry: {name: 'Angry', emoji: '😡'},
     confuse: {name: 'Confused', emoji: '😖'},
@@ -37,6 +38,10 @@ const emojis = {
 
 export default {
     name: 'EmotionsEmoji',
+    components: {
+        BButton,
+        BButtonGroup
+    },
     mounted: function () {
         for (const [type, emoji] of Object.entries(emojis)) {
             this.buttonsEmojis.push({

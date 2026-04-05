@@ -1,40 +1,37 @@
-import Vue from 'vue';
-import VueRouter from 'vue-router';
-
-import { BootstrapVue } from 'bootstrap-vue';
+import { createApp } from 'vue';
+import { createBootstrap } from 'bootstrap-vue-next';
 
 import App from './App.vue';
 import router from './routes';
 
-import 'bootstrap';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import 'bootstrap-vue-next/dist/bootstrap-vue-next.css';
 
 import './scss/app.scss';
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
-Vue.component('font-awesome-icon', FontAwesomeIcon);
+const app = createApp(App);
 
-// BootstrapVue
-Vue.use(BootstrapVue);
-Vue.use(VueRouter);
+app.component('font-awesome-icon', FontAwesomeIcon);
 
-Vue.directive('click-outside', {
-  bind(el, binding, vnode) {
+app.use(createBootstrap());
+app.use(router);
+
+app.directive('click-outside', {
+  mounted(el, binding) {
     const ourClickEventHandler = event => {
       if (!el.contains(event.target) && el !== event.target) {
         binding.value(event);
       }
     };
     el.__vueClickEventHandler__ = ourClickEventHandler;
-    document.addEventListener("click", ourClickEventHandler);
+    document.addEventListener('click', ourClickEventHandler);
   },
-  unbind: function (el) {
-    document.removeEventListener("click", el.__vueClickEventHandler__);
+  unmounted(el) {
+    document.removeEventListener('click', el.__vueClickEventHandler__);
   }
 });
 
-new Vue({
-  el: '#app',
-  router,
-  render: h => h(App)
-})
+app.mount('#app');

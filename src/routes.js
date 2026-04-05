@@ -1,33 +1,40 @@
-import VueRouter from 'vue-router';
+import { createRouter, createWebHistory } from 'vue-router';
 
-let routes = [
+import Home from './components/Home.vue';
+import Search from './components/Search.vue';
+import Camera from './components/Camera.vue';
+import Ratings from './components/Ratings.vue';
+import TreeList from './components/TreeList.vue';
+
+const routes = [
     {
         path: '/',
         name: 'home',
-        component: require('./components/Home.vue').default,
+        component: Home
     },
     {
         path: '/search',
         name: 'search',
-        component: require('./components/Search.vue').default
+        component: Search
     },
     {
         path: '/camera',
         name: 'camera',
-        component: require('./components/Camera.vue').default
+        component: Camera
     },
     {
         path: '/ratings',
         name: 'ratings',
-        component: require('./components/Ratings.vue').default
+        component: Ratings
     },
     {
         path: '/treelist',
         name: 'treelist',
-        component: require('./components/TreeList.vue').default
+        component: TreeList
     }
-]
+];
 
-export default new VueRouter({
+export default createRouter({
+    history: createWebHistory(),
     routes
-})
+});

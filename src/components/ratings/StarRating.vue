@@ -1,7 +1,7 @@
 <template>
     <div class="rating">
         <ul class="list">
-            <li @click="rate(star)" v-for="star in maxStars" :class="{ 'active': star <= stars }" :key="star.stars" class="star">
+            <li @click="rate(star)" v-for="star in maxStars" :class="{ 'active': star <= stars }" :key="star" class="star">
                 <font-awesome-icon :icon="['fas', 'star']"/> 
             </li>
         </ul>
@@ -10,8 +10,6 @@
 
 
 <script>
-
-// Font Awesome 5
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faStar  } from '@fortawesome/free-solid-svg-icons'
 library.add( faStar );

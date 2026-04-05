@@ -16,6 +16,8 @@ export class TreeNode {
     this.parent = null
     this.children = []
     this.isLeaf = !!isLeaf
+    this.isActive = false
+    this.bold = false
 
     // other params
     for (var k in data) {
