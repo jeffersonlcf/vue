@@ -19,3 +19,7 @@ npm run preview
 ```
 
 For detailed explanation on how things work, consult the [Vite docs](https://vitejs.dev/).
+
+## Deployment
+
+See [DEPLOYMENT.md](DEPLOYMENT.md).

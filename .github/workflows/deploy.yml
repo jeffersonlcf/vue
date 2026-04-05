@@ -32,6 +32,11 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Add docs to dist
+        run: |
+          cp README.md dist/README.md
+          cp DEPLOYMENT.md dist/DEPLOYMENT.md
+
       - name: Deploy to jeffersonlcf.github.io
         uses: peaceiris/actions-gh-pages@v4
         with:
